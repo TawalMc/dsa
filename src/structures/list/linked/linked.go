@@ -1,11 +1,11 @@
-package list
+package linked
 
 import "fmt"
 
 // Node is the type of each linked list child
 type Node struct {
-	data int
-	next *Node
+	Data int
+	Next *Node
 }
 
 // New will create a head for a new linked list
@@ -17,8 +17,8 @@ func New() *Node {
 // "H" of receivers means "Head"
 func (H *Node) Traverse() *Node {
 	temp := H
-	for temp.next != nil {
-		temp = temp.next
+	for temp.Next != nil {
+		temp = temp.Next
 	}
 
 	return temp
@@ -26,14 +26,14 @@ func (H *Node) Traverse() *Node {
 
 // Display will output the linked list
 func (H *Node) Display() {
-	temp := H.next
-	len := 0
+	temp := H.Next
+	length := 0
 	for temp != nil {
-		len++
-		fmt.Printf("%v ", temp.data)
-		temp = temp.next
+		length++
+		fmt.Printf("%v ", temp.Data)
+		temp = temp.Next
 	}
-	fmt.Printf("(len = %v)\n", len)
+	fmt.Printf("(length = %v)\n", length)
 }
 
 // InsertAtEnd will insert a new node at the end of the linked list
@@ -41,18 +41,18 @@ func (H *Node) InsertAtEnd(data int) {
 	newNode := &Node{data, nil}
 	tail := H.Traverse()
 
-	tail.next = newNode
+	tail.Next = newNode
 }
 
 // InsertAtStart will insert a new node at the beginning of the linked list
 func (H *Node) InsertAtStart(data int) {
 	newNode := &Node{data, nil}
 
-	newNode.next = H.next
-	H.next = newNode
+	newNode.Next = H.Next
+	H.Next = newNode
 }
 
-// InsertAt will insert data at any position
+// InsertAt will insert Data at any position
 func (H *Node) InsertAt(data int, nth int) {
 
 	if nth == 0 {
@@ -65,40 +65,44 @@ func (H *Node) InsertAt(data int, nth int) {
 	}
 
 	temp := H
-	for i := 0; temp.next != nil; i++ {
+	for i := 0; temp.Next != nil; i++ {
 		if i == nth {
 			newNode := &Node{data, nil}
 
-			newNode.next = temp.next
-			temp.next = newNode
+			newNode.Next = temp.Next
+			temp.Next = newNode
 			return
 		}
-		temp = temp.next
+		temp = temp.Next
 	}
 }
 
 func (H *Node) DeleteAt(nth int) {
 	temp := H
-	for i := 0; temp.next != nil; i++ {
+	for i := 0; temp.Next != nil; i++ {
 		if i == nth {
-			// temp1 := temp.next
-			// temp.next = temp1.next
+			// temp1 := temp.Next
+			// temp.Next = temp1.Next
 			// temp1 = nil
-			temp.next = temp.next.next
+			temp.Next = temp.Next.Next
 			return
 		}
-		temp = temp.next
+		temp = temp.Next
 	}
 }
 
-// TODO
 func (H *Node) ReversedList() {
-	temp := H
-	for temp.next != nil {
-		copyTemp := temp
+	var (
+		current       = H.Next
+		prev    *Node = nil
+		next    *Node = nil
+	)
 
-		copyTemp.next = H.next
-		H.next = copyTemp
-		temp = temp.next
+	for current != nil {
+		next = current.Next
+		current.Next = prev
+		prev = current
+		current = next
 	}
+	H.Next = prev
 }

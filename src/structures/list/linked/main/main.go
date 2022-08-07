@@ -1,22 +1,24 @@
 package main
 
-import "fmt"
-import "structures/list"
+import (
+	"fmt"
+	"structures/list/linked"
+)
 
 func main() {
-	head := list.New()
+	head := linked.New()
 	fmt.Print("empty list:  ")
 	head.Display() // empty list
 
 	fmt.Print("insert at end: ")
-	head.InsertAtEnd(5)
-	head.InsertAtEnd(12)
-	head.InsertAtEnd(25)
+	head.InsertAtEnd(15)
+	head.InsertAtEnd(23)
+	head.InsertAtEnd(7)
 	head.Display()
 
 	fmt.Print("insert at start: ")
-	head.InsertAtStart(8)
-	head.InsertAtStart(13)
+	head.InsertAtStart(88)
+	head.InsertAtStart(163)
 	head.Display()
 
 	fmt.Print("insert at start: ")
